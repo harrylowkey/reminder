@@ -16,12 +16,13 @@ const { sendMail } = require('./common/mailer/sendgrid')
 async function init() {
   await authorize()
     .then(async (auth) => {
-      let [birthdayReport, weatherReport, calendarReport] = await Promise.all([
+      let [birthdayReport, weatherReport, calendarReport, cryptoReport] = await Promise.all([
         reporter('BIRTH_DAY'),
         reporter('WEATHER', {
           cities: ['Tỉnh Khánh Hòa', 'Thanh pho Ho Chi Minh', 'Ha Noi', 'Cam Pha Mines', 'Tỉnh Ðà Nẵng']
         }),
-        reporter('CALENDAR', { auth })
+        reporter('CALENDAR', { auth }),
+        reporter('CRYPTO')
       ])
 
       const reports = `
@@ -31,6 +32,8 @@ async function init() {
         ${weatherReport.details}\
         ${calendarReport.header}\
         ${calendarReport.details}\
+        ${cryptoReport.header}\
+        ${cryptoReport.details}\
         `
       await sendMail(reports)
     })

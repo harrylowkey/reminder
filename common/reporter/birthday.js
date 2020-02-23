@@ -3,7 +3,6 @@ const xlsx = require('xlsx-populate')
 const RANGE = 'A1:L40'
 const SPREAD_SHEET_ID = '126KByeu4XDePZ01oUd9DvutPLw1167Oaw94Kpo2cdZ8'
 const { preData } = require('../../spreadsheet')
-const { authorize } = require('../../authorization')
 const { getSpreadSheetById } = require('../../spreadsheet')
 
 const USER_DATA_PATH = __dirname + '/data.xlsx'

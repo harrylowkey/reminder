@@ -2,6 +2,7 @@
 let { birthdayReport } = require('./birthday')
 let { weatherReport } = require('./weather')
 let { calendarReport } = require('./calendar')
+let { cryptoReport } = require('./crypto')
 
 
 const reporter = async (type, option = {}) => {
@@ -17,6 +18,9 @@ const reporter = async (type, option = {}) => {
     case 'CALENDAR':
       let auth = option.auth || {}
       report = await calendarReport(auth)
+      break
+    case 'CRYPTO':
+      report = await cryptoReport()
       break
     default:
       console.log('Invalid type')
