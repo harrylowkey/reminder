@@ -4,7 +4,6 @@ const RANGE = 'A1:L40'
 const SPREAD_SHEET_ID = '126KByeu4XDePZ01oUd9DvutPLw1167Oaw94Kpo2cdZ8'
 const { preData } = require('../../spreadsheet')
 const { getSpreadSheetById } = require('../../spreadsheet')
-
 const USER_DATA_PATH = __dirname + '/data.xlsx'
 
 let getBirthdayPeople = (datas) => {
@@ -23,7 +22,7 @@ let fetchUserData = async () => {
   let data = await xlsx.fromFileAsync(USER_DATA_PATH)
     .then(async workbook => {
       const value = workbook.sheet("Sheet1").range(RANGE).value();
-      if (!value.length < 0) {
+      if (value.length <= 0) {
         await getSpreadSheetById(SPREAD_SHEET_ID)
       }
       return preData(value)

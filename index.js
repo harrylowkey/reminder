@@ -3,9 +3,7 @@ console.log("Path: ", path)
 require('dotenv').config({
   path: path
 })
-
 var cron = require('node-cron');
-
 const DB = require('./db/mongoose')
 DB.connect()
 
