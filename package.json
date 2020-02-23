@@ -9,9 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.5.3",
+    "axios": "^0.19.2",
+    "bluebird": "^3.7.2",
+    "const": "^1.0.0",
     "dotenv": "^8.2.0",
     "googleapis": "^39.2.0",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
+    "mongoose": "^5.9.2",
     "xlsx-populate": "^1.20.1"
   }
 }
