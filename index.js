@@ -4,7 +4,7 @@ require('dotenv').config({
   path: path
 })
 
-const DB = require('./mongoose')
+const DB = require('./db/mongoose')
 DB.connect()
 
 const { reporter } = require('./common/reporter')

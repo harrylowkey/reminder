@@ -34,6 +34,7 @@ let fetchUserData = async () => {
       return preData(value)
     })
     .catch(async err => {
+      console.log
       // No file data found
       if (err.errno === -2) {
         return await authorize()

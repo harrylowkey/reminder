@@ -8,7 +8,7 @@ const API_KEY = process.env.OPENWEATHER_API_KEY
 
 
 let makeReportDetail = (data) => {
-  const { getTimes } = require('../../utils')
+  const { getTimes } = require('../utils')
   let header = 'WEATHER TODAY'
   let details = []
   Object.keys(data).map((id, index) => {
