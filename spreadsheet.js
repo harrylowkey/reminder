@@ -2,8 +2,6 @@
 const { google } = require('googleapis');
 const API_KEY = process.env.API_KEY
 const RANGE = 'A1:Z40'
-const { getBirthdayPeople, reporter } = require('./utils')
-const { REMINDER } = require('./reminder')
 let getSpreadSheetById = async (spreadsheetId) => {
   var sheets = google.sheets('v4');
   try {

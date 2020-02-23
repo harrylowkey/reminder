@@ -42,22 +42,25 @@ let getAccessToken = (oAuth2Client) => {
   });
 }
 
-let authorize = (fileName) => {
+let authorize = async (fileName) => {
   return new Promise((res, rej) => {
-    fs.readFile(fileName, (err, content) => {
-      if (err) rej('Error loading client secret file:', err)
+    try {
+      let content = fs.readFileSync(fileName)
       let credentials = JSON.parse(content)
       const { client_secret, client_id, redirect_uris } = credentials.installed;
       const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-
-      // Check if we have previously stored a token.
-      fs.readFile(TOKEN_PATH, (err, token) => {
-        if (err) return getAccessToken(oAuth2Client);
-        oAuth2Client.setCredentials(JSON.parse(token));
-      });
-
       res()
-    });
+      // Check if we have previously stored a token.
+      try {
+        let token = fs.readFileSync(TOKEN_PATH) 
+        oAuth2Client.setCredentials(JSON.parse(token));
+      } catch (error) {
+        return getAccessToken(oAuth2Client);
+      }
+    } catch (error) {
+      rej('Error loading client secret file:', error)
+    }
+
   })
 }
 
@@ -65,11 +68,12 @@ async function init() {
   let data = await xlsx.fromFileAsync('./data.xlsx')
     .then(async workbook => {
       const value = workbook.sheet("Sheet1").range(RANGE).value();
-      if (!value.length) {
+      if (!value.length < 0) {
         return await authorize(CREDENTIALS_PATH)
           .then(async () => {
             return await getSpreadSheetById(SPREAD_SHEET_ID)
           })
+          .catch(err => console.log('Error when fetching data', err))
       }
       return preData(value)
     })
@@ -80,8 +84,10 @@ async function init() {
           .then(async () => {
             return await getSpreadSheetById(SPREAD_SHEET_ID)
           })
+          .catch(err => console.log('Error when fetching data'))
       }
     })
+  if (!data) return console.log('Error when fetching data')
   let birthdayReport = reporter(data, 'BIRTH_DAY')
   console.log(birthdayReport)
 }
