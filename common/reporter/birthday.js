@@ -2,8 +2,7 @@ const moment = require('moment')
 const xlsx = require('xlsx-populate')
 const RANGE = 'A1:L40'
 const SPREAD_SHEET_ID = '126KByeu4XDePZ01oUd9DvutPLw1167Oaw94Kpo2cdZ8'
-const { preData } = require('../../spreadsheet')
-const { getSpreadSheetById } = require('../../spreadsheet')
+const { preUserData, getSpreadSheetById } = require('@utils')
 const USER_DATA_PATH = __dirname + '/data.xlsx'
 
 let getBirthdayPeople = (datas) => {
@@ -25,7 +24,7 @@ let fetchUserData = async () => {
       if (value.length <= 0) {
         await getSpreadSheetById(SPREAD_SHEET_ID)
       }
-      return preData(value)
+      return preUserData(value)
     })
     .catch(async err => {
       // No file data found

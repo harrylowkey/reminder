@@ -11,26 +11,30 @@ let makeReportDetail = (data) => {
   const { getTimes } = require('../utils')
   let header = 'WEATHER TODAY'
   let details = []
-  Object.keys(data).forEach((id, index) => {
-    let city = data[id] || undefined
-    if (!city) return console.log('Not found weather data')
-    let weather = city.weather[0]
-    let { main, sys, wind, clouds } = city
-
-    let mess = `
-    ${index + 1}. Name: ${city.name} \
-    Main: ${weather.main} \
-    ${weather.description} \
-    Tenparatuure: ${main.temp - 273.15} *C \
-    Pressure: ${main.pressure} \
-    Humidity: ${main.humidity} \
-    Wind Speed: ${wind.speed} \
-    Clouduiness: ${clouds.all}% \
-    Sunrise: ${getTimes(sys.sunrise)} \
-    Sunset: ${getTimes(sys.sunset)} \
-    `
-    details.push(mess)
-  })
+        
+  for (let key in data) {
+    let index = 0
+    if (data.hasOwnProperty(key)) {
+      let city = data[key]
+      let weather = city.weather[0]
+      let { main, sys, wind, clouds } = city
+  
+      let mess = `
+      ${index + 1}. Name: ${city.name} \
+      Main: ${weather.main} \
+      ${weather.description} \
+      Tenparatuure: ${main.temp - 273.15} *C \
+      Pressure: ${main.pressure} \
+      Humidity: ${main.humidity} \
+      Wind Speed: ${wind.speed} \
+      Clouduiness: ${clouds.all}% \
+      Sunrise: ${getTimes(sys.sunrise)} \
+      Sunset: ${getTimes(sys.sunset)} \
+      `
+      details.push(mess)
+      index++
+    }
+  }
   return { header, details }
 }
 

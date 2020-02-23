@@ -26,14 +26,12 @@ let fetchCryptoPrice = async () => {
       return null
     })
   if (request) {
-    console.log('fetched data from CMC', JSON.stringify(request, null, 2))
     let data = []
     for (let key in request) {
       if (request.hasOwnProperty(key)) {
-        console.log(request[key]['quote']['USD']['price'])
         let preData = {
-          name: request['name'],
-          symbol: request['symbol'],
+          name: request[key]['name'],
+          symbol: request[key]['symbol'],
           price: request[key]['quote']['USD']['price'],
           percentChange1h: request[key]['quote']['USD']['percent_change_1h'],
           percentChange24h: request[key]['quote']['USD']['percent_change_24h'],

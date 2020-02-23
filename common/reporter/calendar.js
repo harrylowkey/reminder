@@ -21,8 +21,8 @@ let fetchEvents = async (auth) => {
     let today = moment((moment().format("YYYY-MM-DD")).slice(0, 10)).unix()
     if (today >= startTimestamp && today <= endTimestamp) {
       let preData = {
-        start: start.slice(11, 19),
-        end: end.slice(11, 19),
+        start: start.slice(11, 19) || start,
+        end: end.slice(11, 19) || end,
         content: event.summary,
         description: event.description || ''
       }

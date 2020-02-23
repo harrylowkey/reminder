@@ -20,5 +20,11 @@
     "mongoose": "^5.9.2",
     "node-cron": "^2.0.3",
     "xlsx-populate": "^1.20.1"
+  },
+  "_moduleAliases": {
+    "@utils": "common/utils"
+  },
+  "devDependencies": {
+    "module-alias": "^2.2.2"
   }
 }

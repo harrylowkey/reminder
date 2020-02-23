@@ -1,3 +1,4 @@
+require('module-alias/register')
 let path = `.${process.env.NODE_ENV || 'local'}.env`
 console.log("Path: ", path)
 require('dotenv').config({
@@ -38,14 +39,7 @@ async function init() {
 
 }
 
-cron.schedule('00 08 * * *', () => {
   init()
-}, {
-  scheduled: true,
-  timeZone: "Asia/Ho_Chi_Minh"
-});
-
-
 
 
 
