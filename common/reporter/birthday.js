@@ -25,23 +25,14 @@ let fetchUserData = async () => {
     .then(async workbook => {
       const value = workbook.sheet("Sheet1").range(RANGE).value();
       if (!value.length < 0) {
-        return await authorize()
-          .then(async () => {
-            return await getSpreadSheetById(SPREAD_SHEET_ID)
-          })
-          .catch(err => console.log('Error when fetching data', err))
+        await getSpreadSheetById(SPREAD_SHEET_ID)
       }
       return preData(value)
     })
     .catch(async err => {
-      console.log
       // No file data found
       if (err.errno === -2) {
-        return await authorize()
-          .then(async () => {
-            return await getSpreadSheetById(SPREAD_SHEET_ID)
-          })
-          .catch(err => console.log('Error when fetching data', err))
+        await getSpreadSheetById(SPREAD_SHEET_ID)
       }
     })
   if (!data) return console.log('Error when fetching data')

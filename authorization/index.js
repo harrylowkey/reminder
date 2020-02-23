@@ -8,6 +8,7 @@ const TOKEN_PATH = __dirname + '/token.json';
 const SCOPES = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/spreadsheets',
+  'https://www.googleapis.com/auth/calendar',
   'https://www.googleapis.com/auth/drive.metadata.readonly'
 ];
 
@@ -25,13 +26,14 @@ let getAccessToken = (oAuth2Client) => {
   });
   rl.question('Enter the code from that page here: ', (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
+    return oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error('Error retrieving access token', err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
         if (err) return console.error(err);
         console.log('Token stored to', TOKEN_PATH);
+        return oAuth2Client
       });
     });
   });
@@ -44,22 +46,22 @@ let authorize = async () => {
       let credentials = JSON.parse(content)
       const { client_secret, client_id, redirect_uris } = credentials.installed;
       const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-      res()
       // Check if we have previously stored a token.
       try {
         let token = fs.readFileSync(TOKEN_PATH) 
         oAuth2Client.setCredentials(JSON.parse(token));
+        res(oAuth2Client)
       } catch (error) {
-        return getAccessToken(oAuth2Client);
+        let oAuth2Client = getAccessToken(oAuth2Client);
+        res(oAuth2Client)
       }
     } catch (error) {
       console.log(error)
       rej('Error loading client secret file')
     }
-
   })
 }
 
 module.exports = {
-  authorize
+  authorize,
 }
