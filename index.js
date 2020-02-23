@@ -32,21 +32,17 @@ async function init() {
         ${calendarReport.header}\
         ${calendarReport.details}\
         `
-
-      console.log(reports)
-      // await sendMail(reports)
+      await sendMail(reports)
     })
 
 }
 
-init()
-
-// cron.schedule('00 08 * * *', () => {
-//   init()
-// }, {
-//   scheduled: true,
-//   timeZone: "Asia/Ho_Chi_Minh"
-// });
+cron.schedule('00 08 * * *', () => {
+  init()
+}, {
+  scheduled: true,
+  timeZone: "Asia/Ho_Chi_Minh"
+});
 
 
 
