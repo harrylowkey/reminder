@@ -35,20 +35,18 @@ let fetchEvents = async (auth) => {
 async function calendarReport(auth) {
   let events = await fetchEvents(auth)
   let header = 'CALENDAR REPORT'
+  let description = ''
   if (events.length == 0) {
-    return { header, details: ['No event today'] }
+    description = 'No event today'
   }
-  let details = []
-  events.map((event, index) => {
-    let mess = `
-      ${index + 1}. ${event.content} \
-      Description: ${event.description} \
-      Start: ${event.start} \
-      End: ${event.end}
-    `
-    details.push(mess)
-  })
-  return { header, details }
+  let data = events.map(event => ({
+    content: event.content,
+    description: event.description,
+    start: event.start,
+    end: event.end
+  }))
+  
+  return { header, description, data }
 }
 
 module.exports = { calendarReport }

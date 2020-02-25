@@ -1,27 +1,27 @@
 const sgMail = require('@sendgrid/mail');
 const Promise = require('bluebird')
+const path = require('path')
+const pug = require('pug')
 const API_KEY = process.env.SENDGRID_API_KEY
 const userMails = [
   {
     name: 'Quang',
     gmail: 'danghongquang99@gmail.com'
   },
-  {
-    name: 'Quang-Homa',
-    gmail: 'quang.dang@homa.company'
-  }
+  // {
+  //   name: 'Quang-Homa',
+  //   gmail: 'quang.dang@homa.company'
+  // }
 ]
 
 sgMail.setApiKey(API_KEY);
-const send = ({ to, subject, dataTemplate, templateId, html, text }) => {
+const send = ({ to, subject, template }) => {
   const preData = {
     to,
     from: 'noreply@reminder.com',
     subject,
-    templateId,
-    dynamic_template_data: dataTemplate,
-    html,
-    text,
+    html: template,
+    text: "AA",
     hideWarnings: true
   }
   sgMail.send(preData)
@@ -31,11 +31,12 @@ const send = ({ to, subject, dataTemplate, templateId, html, text }) => {
 }
 
 const sendMail = async (data) => {
+  const template = pug.renderFile(path.join(__dirname, '../../template/mail.pug'), data);
   await Promise.map(userMails, (user) => {
     let preData = {
-      subject: 'Reminder report',
+      subject: 'Reminder Report',
       to: user.gmail,
-      text: data
+      template
     }
     return send(preData)
   }, { concurrency: 100 })

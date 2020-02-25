@@ -1,0 +1,111 @@
+doctype html
+html
+  head
+    title Demo CSS Table Price Hosting Plan
+    meta(http-equiv='X-UA-Compatible', content='IE=EmulateIE7; IE=EmulateIE9')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no')
+    link(rel='shortcut icon', href='http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico')
+    link(rel='stylesheet', type='text/css', href='styles.css', media='all')
+    link(rel='stylesheet', type='text/css', href='demo.css', media='all')
+    style
+      include ./styles/mail.css
+  body
+    .container
+      .cryptocontainer
+        header
+          h1
+            span #{header}
+          h3 
+            span #{cryptoReport.header}
+        each crypto, i in cryptoReport.data
+          header
+            #fdw-pricing-table
+              .plan.plan1
+                .header #{crypto.name}
+                .price #{crypto.symbol}
+                ul
+                  li
+                    b Price: #{crypto.price}
+                  li
+                    b 1 hour change:
+                    |  #{crypto.oneHourChange}
+                  li
+                    b 24 hours change:
+                    |  #{crypto.twoFourHoursChange}
+      .weathercontainer
+        header
+          h3 
+            span #{weatherReport.header}
+        each city, i in weatherReport.data
+          header
+            #fdw-pricing-table
+              .plan.plan1
+                .header #{city.name}
+                .price #{city.main}
+                ul
+                  li
+                    b #{city.description}
+                  li
+                    b Temparature:
+                    |  #{city.temparature}
+                  li
+                    b Humidity:
+                    |  #{city.humidity}
+                  li
+                    b Wind speed:
+                    | #{city.wind}
+                  li
+                    b Cloudiness:
+                    |  #{city.cloudiness}
+                  li
+                    b Sunrise:
+                    |  #{city.sunrise}
+                  li
+                    b Sunset:
+                    | #{city.sunset}
+      .calendarcontainer
+        header
+          h3 
+            span #{calendarReport.header}
+          h5
+            span #{calendarReport.description}
+        if calendarReport.data.length > 0
+          each stuff, i in calendarReport.data
+            header
+              #fdw-pricing-table
+                .plan.plan1
+                  .header #{stuff.content}
+                  .price #{stuff.description}
+                  ul
+                    li
+                      b Start: 
+                      | #{stuff.start}
+                    li
+                      b End:
+                      |  #{stuff.end}
+      .birthdaycontainer
+        header
+          h3 
+            span #{birthdayReport.header}
+          h5
+            span #{birthdayReport.description}
+        if birthdayReport.data.length > 0
+          each person, i in birthdayReport.data
+            header
+              #fdw-pricing-table
+                .plan.plan1
+                  .header #{person.name}
+                  ul
+                    li
+                      b Phone: 
+                      | #{[person.phone]}
+                    li
+                      b Email:
+                      |  #{person.email}
+                    li
+                      b Hobbies: 
+                      | #{[person.hobbies]}
+
+
+

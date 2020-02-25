@@ -46,20 +46,17 @@ let fetchCryptoPrice = async () => {
 let cryptoReport = async () => {
   let datas = await fetchCryptoPrice()
   if (!datas) return console.log('Error when fetching crypto price')
-  let header = 'CRYPTO  REPORT'
-  let details = []
-  datas.map((crypto, index) => {
-    let mess = `
-    ${index + 1}. Name: ${crypto.name}\
-    Symbol: ${crypto.symbol}\
-    Price: ${crypto.price}\
-    1h Change: ${crypto.percentChange1h}%\
-    24h Change: ${crypto.percentChange24h}%
-    `
-    details.push(mess)
-  })
+  let header = 'CRYPTO'
+  let data = datas.map(crypto => ({
+    name: crypto.name,
+    symbol: crypto.symbol,
+    price: crypto.price,
+    oneHourChange: crypto.percentChange1h,
+    twoFourHoursChange: crypto.percentChange24h
+  }))
 
-  return { header, details }
+  
+  return { header, data }
 }
 
 module.exports = { cryptoReport }

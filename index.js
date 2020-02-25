@@ -4,6 +4,8 @@ console.log("Path: ", path)
 require('dotenv').config({
   path: path
 })
+
+const moment = require('moment')
 var cron = require('node-cron');
 const DB = require('./db/mongoose')
 DB.connect()
@@ -24,17 +26,18 @@ async function init() {
         reporter('CRYPTO')
       ])
 
-      const reports = `
-        ${birthdayReport.header} \
-        ${birthdayReport.details}\
-        ${weatherReport.header}\
-        ${weatherReport.details}\
-        ${calendarReport.header}\
-        ${calendarReport.details}\
-        ${cryptoReport.header}\
-        ${cryptoReport.details}\
-        `
-      await sendMail(reports)
+      let today = moment().format("MM-DD-YYYY")
+      let header = `Reminder Report - ${today}`
+      
+      let data = {
+        header,
+        birthdayReport,
+        weatherReport,
+        calendarReport,
+        cryptoReport,
+      }
+
+      sendMail(data)
     })
 
 }

@@ -7,35 +7,32 @@ let WEATHER_URL = `${env == 'local' ? 'http://' : ''}api.openweathermap.org/data
 const API_KEY = process.env.OPENWEATHER_API_KEY
 
 
-let makeReportDetail = (data) => {
+let makeReportDetail = (datas) => {
   const { getTimes } = require('../utils')
-  let header = 'WEATHER TODAY'
-  let details = []
-        
-  for (let key in data) {
-    let index = 0
-    if (data.hasOwnProperty(key)) {
-      let city = data[key]
+  let header = 'WEATHER'
+  let data = []
+
+  for (let key in datas) {
+    if (datas.hasOwnProperty(key)) {
+      let city = datas[key]
       let weather = city.weather[0]
       let { main, sys, wind, clouds } = city
-  
-      let mess = `
-      ${index + 1}. Name: ${city.name} \
-      Main: ${weather.main} \
-      ${weather.description} \
-      Tenparatuure: ${main.temp - 273.15} *C \
-      Pressure: ${main.pressure} \
-      Humidity: ${main.humidity} \
-      Wind Speed: ${wind.speed} \
-      Clouduiness: ${clouds.all}% \
-      Sunrise: ${getTimes(sys.sunrise)} \
-      Sunset: ${getTimes(sys.sunset)} \
-      `
-      details.push(mess)
-      index++
+
+      let preData = {
+        name: city.name,
+        main: weather.main,
+        description: weather.description,
+        temparature: main.temp - 273.15,
+        humidity: main.humidity,
+        windSpeed: wind.speed,
+        cloudiness: clouds.all + '%',
+        sunrise: getTimes(sys.sunrise),
+        sunset: getTimes(sys.sunset)
+      }
+      data.push(preData)
     }
   }
-  return { header, details }
+  return { header, data }
 }
 
 let weatherReport = async (cities) => {

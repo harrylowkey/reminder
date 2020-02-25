@@ -39,22 +39,30 @@ let fetchUserData = async () => {
 let birthdayReport = async () => {
   let userData = await fetchUserData()
   let matchPeople = getBirthdayPeople(userData)
+  let header = `Birthday Friends`
+  let description = 'No birthday firends today'
+  let data = []
+
   if (matchPeople.length > 0) {
-    let today = moment().format("MM-DD-YYYY")
-    let header = `BIRTHDAY FRIENDS TODAY - ${today}`
     let age = moment().format('YYYY') - moment(matchPeople[0].DOB).format('YYYY')
     let isMany = matchPeople.length === 1 ? false : true
-    let mess = `Today you have ${matchPeople.length} friend${isMany ? 's' : ''} who ${isMany ? 'were' : 'was'} born on this day ${age} years ago \n`
-    let details = [mess]
-    matchPeople.forEach((person, i) => {
-      let mess = `${i + 1}. ${person.FULLNAME}\ Email: ${person.EMAIL}\ Phone: ${person.PHONE}`
-      return details.push(mess)
-    })
-    return { header, details }
+    description = `Today you have ${matchPeople.length} friend${isMany ? 's' : ''} who ${isMany ? 'were' : 'was'} born on this day ${age} years ago \n`
+    data = matchPeople.map(person => ({
+      name: person.FULLNAME,
+      email: person.EMAIL,
+      team: person['TEAM(S)'],
+      phone: person.PHONE,
+      hobbies: person.hobbies || ''
+    }))
   }
-  return ''
-}
 
+  return {
+    header,
+    description,
+    data
+  }
+
+}
 module.exports = {
   birthdayReport
 }
