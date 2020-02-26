@@ -42,7 +42,14 @@ async function init() {
 
 }
 
+cron.schedule('0 08 * * *', () => {
   init()
+}, {
+  scheduled: true,
+  timeZone: "Asia/Ho_Chi_Minh"
+});
+
+
 
 
 
