@@ -27,7 +27,7 @@ async function init() {
       ])
 
       let today = moment().format("MM-DD-YYYY")
-      let header = `Reminder Report - ${today}`
+      let header = `Reminder Report -- ${today}`
       
       let data = {
         header,
