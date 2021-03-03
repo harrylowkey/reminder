@@ -29,6 +29,6 @@
   },
   "devDependencies": {
     "module-alias": "^2.2.2",
-    "pug": "^2.0.4"
+    "pug": "^3.0.1"
   }
 }
